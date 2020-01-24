@@ -1,30 +1,52 @@
-const CONTEINER = document.querySelector(".container");
-console.dir(CONTEINER);
+const container = document.querySelector(".container");
 
 let newHTML = "";
 
-
-
 for (let i = 0; i < actionGames.length; i++) {
-    //const NAME = <h4> ${actionGames[i].name} </h4>;//
 
-    actionGames[i].rating = actionGames[i].rating ?
-        actionGames[i].rating :
-        "No Rated";
+    let ratingValue = "Not rated";
 
+    if (actionGames[i].rating) {
+        ratingValue = actionGames[i].rating;
+    }
 
-    const DETAILS = `
-    <div class="card">
-        <div class="image" style="background-image: url(${actionGames[i].background_image});">
-        </div>
-        <div class="details">
-            <h4 class="name">${actionGames[i].name}</h4>
-            <div class="rating">${actionGames[i].rating}</div>
-        </div>
-    </div>`;
-    newHTML += DETAILS;
+    const GENRES = actionGames[i].genres;
+    const genreHTML = makeGenres(GENRES);
+    const platforms = actionGames[i].platforms;
+
+    const platformsHTML = makePlatforms(platforms);
+    const details = `<div class="card">
+                        <div class="image" style="background-image: url(${actionGames[i].background_image});"></div>
+                        <div class="details">
+                            <h4 class="name">${actionGames[i].name}</h4>
+                            <div class="rating">${ratingValue}</div>
+                            ${genreHTML}
+                            ${platformsHTML}
+                        </div>
+                    </div>`;
+    newHTML += details;
 }
 
-CONTEINER.innerHTML = newHTML;
+function makeGenres(genreArray) {
+    let genresHTML = "";
+    for (let i = 0; i < genreArray.length; i++) {
+        genresHTML += `<a class ="genre">${genreArray[i].name}</a>`;
+    }
 
-console.log(newHTML);
+    return genresHTML;
+}
+
+const platform = "";
+
+function makePlatforms(platformsArray) {
+    let platformsHTML = "";
+    for (let i = 0; i < platformsArray.length; i++) {
+        platformsHTML += `<a class = "platforms"${platformsArray[i].platform.name}</a>`;
+    }
+    return platformsHTML;
+}
+
+
+
+
+container.innerHTML = newHTML;
